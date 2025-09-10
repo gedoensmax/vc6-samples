@@ -1,0 +1,7 @@
+wheels/*
+.conda
+dataset_png/*
+outputs/*
+decoded/*
+cuda_shader_cache
+video
