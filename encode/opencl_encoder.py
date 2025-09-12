@@ -15,8 +15,20 @@ import os
 import sys
 import argparse
 from typing import List
-from vnova.vc6_opencl import codec as vc6codec
-from vnova.vc6_opencl import __version__ as vc6version
+
+try:
+    from vnova.vc6_opencl import codec as vc6codec
+    from vnova.vc6_opencl import __version__ as vc6version
+except ModuleNotFoundError:
+    sys.exit(
+        "Missing dependency: 'vnova.vc6_opencl'.\n"
+        "This sample requires the VC-6 OpenCL Python SDK.\n"
+        "You can download the SDK from https://download.v-nova.com. Please refer README.md for more instructions.\n"
+        "Please install them and re-run this program."
+    )
+else:
+    print(f"VC-6 OpenCL SDK available : {vc6version}).")
+
 from PIL import Image
 
 def get_input_paths(root: str) -> List[str]:

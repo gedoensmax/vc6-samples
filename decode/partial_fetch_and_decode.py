@@ -16,9 +16,25 @@ import os
 import sys
 import argparse
 from typing import List
-from vnova.vc6_cuda12 import codec as vc6codec
-from vnova.vc6_cuda12 import __version__ as vc6version
 
+try:
+    from vnova.vc6_opencl import codec as vc6codec
+    from vnova.vc6_opencl import __version__ as vc6version
+    modname = "vnova.vc6_opencl"
+except ModuleNotFoundError:
+    try:
+        from vnova.vc6_cuda12 import codec as vc6codec
+        from vnova.vc6_cuda12 import __version__ as vc6version
+        modname = "vnova.vc6_cuda12"
+    except ModuleNotFoundError:
+        sys.exit(
+            "Missing dependency: need 'vnova.vc6_opencl' or 'vnova.vc6_cuda12'.\n"
+            "This sample requires VC-6 Python SDK installed.\n"
+            "You can download the SDK from https://download.v-nova.com. Please refer README.md for more instructions.\n"
+            "Please install them and re-run this program."
+        )
+
+print(f"VC-6 available via ({modname} {vc6version}).")
 
 def get_input_paths(root: str) -> List[str]:
     """
@@ -122,6 +138,14 @@ def parse_arguments() -> argparse.Namespace:
     )
     return parser.parse_args()
 
+def _is_vc6(path: str) -> bool:
+    """
+    Checks if the file is a VC-6 image based on its extension.
+
+    Args:
+        path (str): Path to the image file.
+    """
+    return os.path.splitext(path)[1].lower() == ".vc6"
 
 def main() -> None:
     """Main function."""
@@ -131,12 +155,16 @@ def main() -> None:
     os.makedirs(args.destination_dir, exist_ok=True)
 
     if os.path.isfile(args.source):
+        if not _is_vc6(args.source):
+            print(f"Source file is not a .vc6 image: {args.source}", file=sys.stderr)
+            sys.exit(1)
         image_list = [args.source]
     else:
-        image_list = get_input_paths(args.source)
+        # get_input_paths should return files; we keep only .vc6
+        image_list = [p for p in get_input_paths(args.source) if _is_vc6(p)]
 
     if not image_list:
-        print(f"No valid images found at: {args.source}", file=sys.stderr)
+        print(f"No .vc6 images found at: {args.source}", file=sys.stderr)
         sys.exit(1)
 
     decode_images(image_list, args.maxwidth, args.maxheight, args.batch, args.loq, args.destination_dir)

@@ -17,15 +17,22 @@ These samples demonstrate how to encode, decode, and validate VC-6's functionali
 ```cmd
 pip install -r requirements.txt
 ```
+💡 Note: All the samples need VC-6 Python SDK installed. There are 2 SDKs available.
+1. VC-6 Python CUDA SDK (vnova.vc6_cuda12).
+2. VC-6 Python OpenCL SDK (vnova.vc6_opencl).
+
+Preferably install both the wheels to run all samples.
+
 ## Get SDK & Keys
 
 Follow these steps:
 
-1. Sign up and accept the EULA at the V-Nova Download Portal. [V‑Nova Download Portal](https://download.v-nova.com).
-2. Obtain your SDK wheel(s) and your API Key and Secret.
-3. Do not commit or share license credentials; treat them as secrets.
-4. If you need to rotate a compromised key, contact ai@v-nova.com.
-5. Treat your VC-6 API Key and Secret as credentials; don’t publish or commit them.
+1. Sign up and accept the EULA at the [V‑Nova Download Portal](https://download.v-nova.com).
+2. Download your SDK wheel(s) from Downloads section.
+3. Obtain your API Key and Secret from API Keys section.
+4. Do not commit or share license credentials; treat them as secrets.
+5. If you need to rotate a compromised key, contact ai@v-nova.com.
+6. Treat your VC-6 API Key and Secret as credentials; don’t publish or commit them.
 
 💡 Tip: Setting these variables avoids interactive prompts when running the SDK.
 
@@ -44,6 +51,9 @@ export VC6_LICENSE_ACTIVATION_PASSWORD=<your_api_secret>
 ### Sign EULA
 ![Sign EULA](docs/images/api-key-step-3.png)
 
+### Download SDK
+![Download SDK](docs/images/download-step.png)
+
 ### Get API Key and API Secret
 ![Get API Key and API Secret](docs/images/api-key-step-4.png)
 
@@ -57,8 +67,8 @@ export VC6_LICENSE_ACTIVATION_PASSWORD=<your_api_secret>
    - VC-6 CPU Decoder.
    - VC-6 OpenCL GPU Decoder.
    - VC-6 CUDA GPU Decoder.
-   - VC-6 CUDA GPU Decoder with partial fetch.
-   - VC-6 CUDA GPU Decoder with Region of Interest Decoding.
+   - VC-6 Decoder with partial fetch.
+   - VC-6 Decoder with Region of Interest Decoding.
    - VC-6 CUDA GPU Decoder with CUDA Memory to resize with Nvidia DALI.
 
 
@@ -84,7 +94,7 @@ pip install wheel vc6_opencl-7.16.0-cp38-abi3-win_amd64.whl
 ## Configure VC-6 Codec
 
 ```cmd
-$ python decode/opencl_decoder.py -s source_dir -d destination_dir
+$ python decode/opencl_decoder.py
 
 V-Nova VC-6 Python SDK License Activation Required
 =====================================================

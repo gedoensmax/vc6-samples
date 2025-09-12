@@ -1,5 +1,3 @@
 pillow==11.3.0
 nvidia-dali-cuda120==1.51.2
-# V-Nova Python SDK for VC-6
-wheels/linux_ubuntu_2204_x64_vanilla_cuda12/vc6_cuda12-7.21.0-cp38-abi3-linux_x86_64.whl
-wheels/linux_ubuntu_2204_x64_vanilla_opencl/vc6_opencl-7.21.0-cp38-abi3-linux_x86_64.whl
+# V-Nova Python SDK for VC-6 from https://download.v-nova.com

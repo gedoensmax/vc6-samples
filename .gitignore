@@ -1,5 +1,6 @@
 wheels/*
 .conda
+.venv
 dataset_png/*
 outputs/*
 decoded/*

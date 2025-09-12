@@ -15,8 +15,26 @@ import os
 import sys
 import argparse
 from typing import List
-from vnova.vc6_opencl import codec as vc6codec
-from vnova.vc6_opencl import __version__ as vc6version
+
+try:
+    from vnova.vc6_opencl import codec as vc6codec
+    from vnova.vc6_opencl import __version__ as vc6version
+    modname = "vnova.vc6_opencl"
+except ModuleNotFoundError:
+    try:
+        from vnova.vc6_cuda12 import codec as vc6codec
+        from vnova.vc6_cuda12 import __version__ as vc6version
+        modname = "vnova.vc6_cuda12"
+    except ModuleNotFoundError:
+        sys.exit(
+            "Missing dependency: need 'vnova.vc6_opencl' or 'vnova.vc6_cuda12'.\n"
+            "This sample requires VC-6 Python SDK installed.\n"
+            "You can download the SDK from https://download.v-nova.com. Please refer README.md for more instructions.\n"
+            "Please install them and re-run this program."
+        )
+
+print(f"VC-6 CPU available via ({modname} {vc6version}).")
+
 from PIL import Image
 
 def get_input_paths(root: str) -> List[str]:
