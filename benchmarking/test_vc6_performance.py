@@ -19,8 +19,8 @@ from global_vars import (
     test_results,
 )
 
-MAXWIDTH = 4000
-MAXHEIGHT = 4000
+MAXWIDTH = 4500
+MAXHEIGHT = 4500
 LOQ = [0, 1, 2]
 ENABLE_DEBUG = False
 BPP = 2  # 3 is close to lossless
