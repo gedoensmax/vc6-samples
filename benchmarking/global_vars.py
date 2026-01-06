@@ -5,7 +5,7 @@ from collections import defaultdict
 import logging
 
 # Global variables for test_nvimagecodec_performance.py
-batch_sizes = [1, 8, 16, 32, 64, 128, 256]
+batch_sizes = [8, 16, 32, 64, 128, 256]
 MAX_VC6_BATCH = 16
 LOSSLESS = False
 resize_dims = [(834, 834), (417, 417)]

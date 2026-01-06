@@ -3,7 +3,7 @@
 # Set to 1 to prevent VC-6 from downloading images from GPU to CPU after decoding.
 SKIP_VC6_GPU2CPU_DOWNLOAD=1
 # Set to 1 to enable nsys profiling, 0 to run without nsys
-NSYS_ENABLED=1
+NSYS_ENABLED=0
 # Set to INFO to see all logs, ERROR to see only errors
 ENABLE_DEBUG=0
 
