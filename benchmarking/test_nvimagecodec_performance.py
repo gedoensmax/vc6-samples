@@ -2,6 +2,7 @@
 # Copyright (c) 2025 V-Nova International Ltd.
 from pathlib import Path
 from itertools import cycle, islice
+from packaging.version import Version
 import time
 
 import pytest
@@ -10,8 +11,6 @@ import torch
 nvimgcodec = pytest.importorskip(
     "nvidia.nvimgcodec", reason="nvimgcodec package is required for JPEG benchmarking"
 )
-
-from nvidia.dali import pipeline, fn
 
 from global_vars import (
     RAW_FILES,
@@ -24,10 +23,11 @@ from global_vars import (
 )
 
 DALI_THREADS = 8
-JPEG_PARAMS = nvimgcodec.EncodeParams(quality_type=nvimgcodec.QualityType.QUALITY, quality_value=80, color_spec=nvimgcodec.ColorSpec.YCC, jpeg_encode_params=nvimgcodec.JpegEncodeParams())
-J2K_PARAMS = nvimgcodec.EncodeParams(quality_type=nvimgcodec.QualityType.QUALITY, quality_value=80, color_spec=nvimgcodec.ColorSpec.YCC, jpeg2k_encode_params=nvimgcodec.Jpeg2kEncodeParams())
+color_spec = nvimgcodec.ColorSpec.YCC if Version(nvimgcodec.__version__) < Version("0.7") else nvimgcodec.ColorSpec.SYCC
+JPEG_PARAMS = nvimgcodec.EncodeParams(quality_type=nvimgcodec.QualityType.QUALITY, quality_value=80, color_spec=color_spec, jpeg_encode_params=nvimgcodec.JpegEncodeParams())
+J2K_PARAMS = nvimgcodec.EncodeParams(quality_type=nvimgcodec.QualityType.QUALITY, quality_value=80, color_spec=color_spec, jpeg2k_encode_params=nvimgcodec.Jpeg2kEncodeParams())
 # HT quality mode seems to be buggy and only supports QStep
-J2K_HT_PARAMS = nvimgcodec.EncodeParams(quality_type=nvimgcodec.QualityType.QUALITY, quality_value=80, color_spec=nvimgcodec.ColorSpec.YCC, jpeg2k_encode_params=nvimgcodec.Jpeg2kEncodeParams(ht=True))
+J2K_HT_PARAMS = nvimgcodec.EncodeParams(quality_type=nvimgcodec.QualityType.QUALITY, quality_value=80, color_spec=color_spec, jpeg2k_encode_params=nvimgcodec.Jpeg2kEncodeParams(ht=True))
 
 class TestNVJPEGCodecPerformance:
     codec = "JPEG"
@@ -93,6 +93,12 @@ class TestNVJPEGCodecPerformance:
     @pytest.mark.parametrize("batch_size,resize_dim", resize_params)
     def test_decode_resize_performance(self, batch_size, resize_dim, images):
         """Measure nvimgcodec decode followed by DALI resize throughput."""
+
+        try:
+            from nvidia.dali import pipeline, fn
+        except ImportError:
+             pytest.skip("nvidia dali package is required for resize benchmarking")
+
         if not torch.cuda.is_available():
             pytest.skip("CUDA is required for nvimgcodec decode+resize benchmarks.")
         nvdec = nvimgcodec.Decoder()

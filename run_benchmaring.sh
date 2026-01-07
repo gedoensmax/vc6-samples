@@ -19,7 +19,7 @@ fi
 
 # Run download tests first to ensure datasets are available
 echo "Running dataset download tests to ensure datasets are available for performance tests..."
-if ! pytest benchmarking/test_download_datasets.py -s $DEBUG_ARG; then
+if ! python benchmarking/test_download_datasets.py -s $DEBUG_ARG; then
   echo "ERROR: Dataset download tests failed. Aborting performance tests."
   exit 1
 fi
