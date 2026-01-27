@@ -20,7 +20,8 @@ pip install -r requirements.txt
 Install the VC-6 SDK package for your preferred backend:
 
 ```bash
-pip install vc6[cu12]     # CUDA backend
+pip install vc6[cuda]     # Latest CUDA backend
+pip install vc6[cu120]    # Legacy CUDA backend, compatible with CUDA 12.0+
 pip install vc6[opencl]   # OpenCL backend
 ```
 
@@ -102,7 +103,7 @@ python decode/decode_resize_cuda_memory_dali.py -rw 224 -rh 224 -s encoded/ -d d
 ### Basic Encoder/Decoder Usage
 
 ```python
-from vnova.vc6_cu12 import codec as vc6codec
+from vnova.vc6_cuda import codec as vc6codec
 
 # Setup an encoder
 encoder = vc6codec.EncoderSync(
@@ -130,11 +131,11 @@ decoder.write(encoded_image.memoryview, "output.rgb")
 
 ### CUDA Device Memory Output
 
-When using `vc6_cu12`, decoder output can be CUDA device memory. Output images expose `__cuda_array_interface__` for interoperability with CuPy, PyTorch, and nvImageCodec.
+When using `vc6_cuda`, decoder output can be CUDA device memory. Output images expose `__cuda_array_interface__` for interoperability with CuPy, PyTorch, and nvImageCodec.
 
 ```python
 import cupy
-from vnova.vc6_cu12 import codec as vc6codec
+from vnova.vc6_cuda import codec as vc6codec
 
 # Setup decoder with CUDA device output
 decoder = vc6codec.DecoderSync(
@@ -167,7 +168,7 @@ export OCL_BIN_LOC=./tmp/clbin   # GPU binary cache location
 export OCL_DEVICE=nvidia          # Target GPU hint
 ```
 
-### CUDA (vc6_cu12)
+### CUDA (vc6_cuda)
 ```bash
 export CUDA_BIN_LOC=./tmp/clbin  # GPU binary cache location
 ```

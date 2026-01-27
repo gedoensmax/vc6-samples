@@ -31,7 +31,7 @@ BPP = 2  # 3 is close to lossless
 def _get_vc6_cuda():
     """Import the VC-6 CUDA codec module, skipping the test if unavailable."""
     try:
-        from vnova.vc6_cu12 import codec as vc6
+        from vnova.vc6_cuda import codec as vc6
     except ImportError as exc:
         pytest.skip(f"VC-6 CUDA codec unavailable: {exc}")
     return vc6
