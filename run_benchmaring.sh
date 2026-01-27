@@ -27,8 +27,8 @@ fi
 echo "Datasets downloaded successfully. Running performance tests..."
 # Run performance tests
 if [ "$NSYS_ENABLED" -eq 1 ]; then
-  nsys_var="--gpu-metrics-devices=all -t cuda,nvtx,osrt,opengl,python-gil,nvvideo"
-  nsys profile $nsys_var -o "profiler_nvtx_real_batch.nsys-$(date +'%Y-%m-%d_%H-%M-%S')-rep" pytest -s $DEBUG_ARG -k "test_decode_performance"
+  nsys_var="--gpu-metrics-devices=all --gpu-video-device=all -t cuda,nvtx,osrt,opengl,python-gil,nvvideo"
+  nsys profile $nsys_var -o "prof_nvtx_real_batch.nsys-$(date +'%Y-%m-%d_%H-%M-%S')-rep" pytest benchmarking/ -s $DEBUG_ARG -k "test_decode_performance"
 else
   pytest benchmarking/ -s $DEBUG_ARG -k "test_decode_performance"
 fi

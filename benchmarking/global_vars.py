@@ -5,16 +5,16 @@ from collections import defaultdict
 import logging
 
 # Global variables for test_nvimagecodec_performance.py
-batch_sizes = [64]
+batch_sizes = [8, 16, 32, 64, 128, 256]
 MAX_VC6_BATCH = 16
 LOSSLESS = False
 resize_dims = [(834, 834), (417, 417)]
 resize_params = list(itertools.product(batch_sizes, resize_dims))
 
-DATASET_DIR = "./huggingface"
+DATASET_DIR = "huggingface"
 RAW_FILES = DATASET_DIR + "/lossless" if LOSSLESS else DATASET_DIR + "/lossy"
 
-TOTAL_IMAGES = 64
+TOTAL_IMAGES = 256
 
 # Dataset to codec directory mapping
 DATASET_MAPPING_LOSSY = {
