@@ -1,5 +1,5 @@
 opencv-python
-nvidia-dali-cuda120
+nvidia-dali-cuda130
 nvtx
 pytest
 matplotlib

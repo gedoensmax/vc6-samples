@@ -41,5 +41,6 @@ if [ -f latest_results_dir.txt ]; then
   RESULTS_DIR=$(cat latest_results_dir.txt)
   if [ -f "${RESULTS_DIR}/test_results.json" ]; then
     python benchmarking/plot_results.py "${RESULTS_DIR}/test_results.json" --output-dir "${RESULTS_DIR}" --plot
+    nvidia-smi > ${RESULTS_DIR}/nvsmi.log
   fi
 fi

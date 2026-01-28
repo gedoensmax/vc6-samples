@@ -27,10 +27,11 @@ from debug_dump import dump_decoded_images
 from hw_stats import HWStatsSampler
 
 DALI_THREADS = 8
-JPEG_PARAMS = nvimgcodec.EncodeParams(quality_type=nvimgcodec.QualityType.QUALITY, quality_value=80, color_spec=nvimgcodec.ColorSpec.YCC, jpeg_encode_params=nvimgcodec.JpegEncodeParams())
-J2K_PARAMS = nvimgcodec.EncodeParams(quality_type=nvimgcodec.QualityType.QUALITY, quality_value=80, color_spec=nvimgcodec.ColorSpec.YCC, jpeg2k_encode_params=nvimgcodec.Jpeg2kEncodeParams())
+color_spec = nvimgcodec.ColorSpec.YCC if Version(nvimgcodec.__version__) < Version("0.7") else nvimgcodec.ColorSpec.SYCC
+JPEG_PARAMS = nvimgcodec.EncodeParams(quality_type=nvimgcodec.QualityType.QUALITY, quality_value=80, color_spec=color_spec, jpeg_encode_params=nvimgcodec.JpegEncodeParams())
+J2K_PARAMS = nvimgcodec.EncodeParams(quality_type=nvimgcodec.QualityType.QUALITY, quality_value=80, color_spec=color_spec, jpeg2k_encode_params=nvimgcodec.Jpeg2kEncodeParams())
 # HT quality mode seems to be buggy and only supports QStep
-J2K_HT_PARAMS = nvimgcodec.EncodeParams(quality_type=nvimgcodec.QualityType.QUALITY, quality_value=80, color_spec=nvimgcodec.ColorSpec.YCC, jpeg2k_encode_params=nvimgcodec.Jpeg2kEncodeParams(ht=True))
+J2K_HT_PARAMS = nvimgcodec.EncodeParams(quality_type=nvimgcodec.QualityType.QUALITY, quality_value=80, color_spec=color_spec, jpeg2k_encode_params=nvimgcodec.Jpeg2kEncodeParams(ht=True))
 
 class TestNVJPEGCodecPerformance:
     codec = "JPEG"

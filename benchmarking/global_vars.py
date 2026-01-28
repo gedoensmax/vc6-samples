@@ -5,7 +5,7 @@ from collections import defaultdict
 import logging
 
 # Global variables for test_nvimagecodec_performance.py
-batch_sizes = [8, 16, 32, 64, 128, 256]
+batch_sizes = [1, 2, 3, 4, 5, 6, 7, 8, 16, 32, 64, 128, 256]
 MAX_VC6_BATCH = 16
 LOSSLESS = False
 DEBUG_DUMP_IMAGES = False
@@ -14,7 +14,7 @@ DEBUG_DUMP_DIR = "debug_dump_images"
 resize_dims = [(834, 834), (417, 417)]
 resize_params = list(itertools.product(batch_sizes, resize_dims))
 
-DATASET_DIR = "huggingface"
+DATASET_DIR = "./huggingface"
 RAW_FILES = DATASET_DIR + "/lossless" if LOSSLESS else DATASET_DIR + "/lossy"
 
 TOTAL_IMAGES = 256
@@ -42,7 +42,7 @@ CODEC_EXTENSIONS = {
 
 # Global number of batches for all tests
 NUM_BATCHES = 100  # Set as needed
-WARMUP_RUNS = 50
+WARMUP_RUNS = 10
 
 test_results = defaultdict(dict)
 LOGGER = logging.getLogger("DECODE_PERF")

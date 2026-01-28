@@ -114,7 +114,7 @@ class TestVC6CodecPerformance:
             start = time.time()
             hw_stats = []
             for i in range(NUM_BATCHES):
-                with torch.cuda.nvtx.range(f"VC6 batch size {batch_size}"):
+                with torch.cuda.nvtx.range(f"VC6 batch size {batch_size} at loq {loq}"):
                     j = i * batch_size
                     k = j + batch_size
                     batch_buffers = image_buffers[j:k]
